@@ -7,10 +7,10 @@
 |> Path.wildcard()
 |> Enum.map(&Code.eval_file(&1))
 
-use Mix.Releases.Config,
-    # This sets the default release built by `mix release`
+use Distillery.Releases.Config,
+    # This sets the default release built by `mix distillery.release`
     default_release: :default,
-    # This sets the default environment used by `mix release`
+    # This sets the default environment used by `mix distillery.release`
     default_environment: Mix.env()
 
 # For a full list of config options for both releases
@@ -22,8 +22,6 @@ use Mix.Releases.Config,
 # when building in that environment, this combination of release
 # and environment configuration is called a profile
 
-cookie = String.to_atom(Base.encode16(:crypto.strong_rand_bytes(32)))
-
 environment :dev do
   # If you are running Phoenix, you should make sure that
   # server: true is set and the code reloader is disabled,
@@ -33,18 +31,19 @@ environment :dev do
   # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: cookie
+  set cookie: :"ut=4LAVf)0.i~BY|5B(c(u[oydEqb.&Ja&zZvkYq=$k[orb*3GkMi]MYsMx:P9N{"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: cookie
+  set cookie: :"BEZUir!tOKQd<T`tok6]K*w_3X^r]@8NV~!36E[<Z.p0=>75Qri(L;or:n9rZ(F("
+  set vm_args: "rel/vm.args"
 end
 
 # You may define one or more releases in this file.
 # If you have not set a default release, or selected one
-# when running `mix release`, the first release in the file
+# when running `mix distillery.release`, the first release in the file
 # will be used by default
 
 release :practice do
